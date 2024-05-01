@@ -2,7 +2,6 @@ import axios, { AxiosResponse } from "axios";
 import { ApiErrorHandler } from "../middleware/api-error-handler";
 import { HttpErrorHandler } from "../middleware/http-error-handler";
 import { message } from "antd";
-import { apiToken } from "./ApiWithToken";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_REACT_APP_API_URL,

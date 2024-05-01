@@ -24,7 +24,7 @@ export async function deleteLocation(id: string){
   return response.data.data;
 }
 
-export async function getLocationById(id: string){
+export async function getLocationById(id: any){
   const response = await apiToken.get<any>(`/items-locations/${id?.queryKey?.[1]}`);
   if (response?.status !== 200) {
     throw new Error(response.data.message);

@@ -3,12 +3,9 @@ import {
   Col,
   Form,
   Input, message,
-  Select
 } from "antd";
-
 import ModalHeader from "../../../shared/ModalHeader";
 import React, { useEffect } from "react";
-import { useAddLocation } from "../../../entities/location/hooks/useAddLocation";
 import { useAddBrand } from "../../../entities/brends/hooks/useAddBrand";
 
 export default function AddModal({

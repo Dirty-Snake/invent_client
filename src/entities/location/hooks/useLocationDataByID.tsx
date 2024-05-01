@@ -8,7 +8,7 @@ export default function useLocationDataByID(id: string): {
 
   const { data: locationDataById, isLoading } = useQuery({
     queryKey: ['LOCATION_DATA_BY_ID', id],
-    queryFn: async(id: string) => await getLocationById(id),
+    queryFn: async(id: any) => await getLocationById(id),
     retryOnMount: false
   });
 

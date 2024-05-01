@@ -1,5 +1,4 @@
 import { apiToken } from "../../../api/ApiWithToken";
-import { IResponseApiData } from "../../../api/types/IRequestApi";
 
 export async function getInventoryBookData(currentPage: number){
   const response = await apiToken.get<any>(`/items?page=${currentPage}&limit=10`);
@@ -25,7 +24,7 @@ export async function deleteInventoryBook(id: string){
   return response.data.data;
 }
 
-export async function geInventoryBookById(id: string){
+export async function geInventoryBookById(id: any){
   const response = await apiToken.get<any>(`/items/${id?.queryKey?.[1]}`);
   if (response?.status !== 200) {
     throw new Error(response.data.message);

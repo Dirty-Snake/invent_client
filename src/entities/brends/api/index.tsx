@@ -24,7 +24,7 @@ export async function deleteBrand(id: string){
   return response.data.data;
 }
 
-export async function getBrandById(id: string){
+export async function getBrandById(id: any){
   const response = await apiToken.get<any>(`/items-brands/${id?.queryKey?.[1]}`);
   if (response?.status !== 200) {
     throw new Error(response.data.message);

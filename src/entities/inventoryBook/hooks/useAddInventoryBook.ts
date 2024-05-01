@@ -6,7 +6,7 @@ export const useAddInventoryBook = () => {
 
   const queryClient = useQueryClient();
 
-  const { mutateAsync, ...options } = useMutation<any, Error, { idOrder: string, idAssay: string }>({
+  const { mutateAsync, ...options } = useMutation<any, Error, any>({
     mutationFn: addInventoryBook,
     onError: error => new Error(error?.message)
   });

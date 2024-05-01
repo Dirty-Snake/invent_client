@@ -8,11 +8,9 @@ import {
 } from "antd";
 import ModalHeader from "../../../shared/ModalHeader";
 import React, { useEffect } from "react";
-import { useAddInventoryBook } from "../../../entities/inventoryBook/hooks/useAddInventoryBook";
 import useLocationData from "../../../entities/location/hooks/useLocationData";
 import useBrandData from "../../../entities/brends/hooks/useBrandData";
 import useUserData from "../../../entities/user/hooks/useUserData";
-import useLocationDataByID from "../../../entities/location/hooks/useLocationDataByID";
 import useInventoryBookDataByID from "../../../entities/inventoryBook/hooks/useInventoryBookDataByID";
 import dayjs from "dayjs";
 import useUpdateInventoryBook from "../../../entities/inventoryBook/hooks/useUpdateInventoryBook";

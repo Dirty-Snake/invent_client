@@ -2,17 +2,10 @@ import React, { useState } from 'react';
 import styles from './style.module.scss';
 import {
   Button,
-  Col,
-  Input,
-  Row,
-  Select,
   Table,
-  DatePicker,
   Modal,
   Dropdown,
   MenuProps,
-  Menu,
-  message,
 } from "antd";
 import MaxWithLayout from "../../../layouts/MaxWithLayout/index";
 import EditIcon from "../../../assets/Icons/EditIcon";
@@ -138,7 +131,7 @@ const HomeContent = () => {
       dataIndex: "action",
       key: "action",
       width: "10%",
-      render: (text: any, record: any) => (
+      render: (record: any) => (
         <div
           style={{
             cursor: "pointer",
@@ -176,7 +169,7 @@ const HomeContent = () => {
             dataSource={inventoryBookData?.result || []}
             scroll={{ x: true }}
             pagination={{
-              onChange: (page, pageSize): any => setCurrentPage(page),
+              onChange: (page): any => setCurrentPage(page),
               position: ["bottomCenter"],
               pageSize: 10,
               total: Number(inventoryBookData?.total),
@@ -207,7 +200,10 @@ const HomeContent = () => {
       >
         <EditModal
           id={isOpenModalEdit?.id}
-          onClose={() => setIsOpenModalEdit(false)}
+          onClose={() => setIsOpenModalEdit({
+            isOpen: false,
+            id: null
+          })}
         />
       </Modal>
     </MaxWithLayout>

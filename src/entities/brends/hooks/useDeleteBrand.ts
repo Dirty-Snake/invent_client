@@ -6,7 +6,7 @@ export const useDeleteBrand = () => {
 
   const queryClient = useQueryClient();
 
-  const { mutateAsync, ...options } = useMutation<any, Error, string>({
+  const { mutateAsync, isPending } = useMutation<any, Error, string>({
     mutationFn: deleteBrand,
     onError: error => new Error(error?.message)
   });
@@ -22,6 +22,6 @@ export const useDeleteBrand = () => {
 
   return {
     handleDelete,
-    ...options,
+    isLoading: isPending
   };
 };

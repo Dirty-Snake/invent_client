@@ -2,17 +2,10 @@ import React, { useState } from 'react';
 import styles from './style.module.scss';
 import {
   Button,
-  Col,
-  Input,
-  Row,
-  Select,
   Table,
-  DatePicker,
   Modal,
   Dropdown,
   MenuProps,
-  Menu,
-  message,
 } from "antd";
 import MaxWithLayout from "../../../layouts/MaxWithLayout/index";
 import EditIcon from "../../../assets/Icons/EditIcon";
@@ -20,7 +13,6 @@ import BucketIcon from "../../../assets/Icons/BucketIcon";
 import { MoreOutlined } from "@ant-design/icons/lib";
 import AddModal from "../modal/AddModal";
 import EditModal from "../modal/EditModal";
-import { useDeleteLocation } from "../../../entities/location/hooks/useDeleteLocation";
 import useBrandData from "../../../entities/brends/hooks/useBrandData";
 import { useDeleteBrand } from "../../../entities/brends/hooks/useDeleteBrand";
 
@@ -119,7 +111,7 @@ const BrandsContent = () => {
       dataIndex: "action",
       key: "action",
       width: "10%",
-      render: (text: any, record: any) => (
+      render: (record: any) => (
         <div
           style={{
             cursor: "pointer",
@@ -157,7 +149,7 @@ const BrandsContent = () => {
             dataSource={brandsData?.result || []}
             scroll={{ x: true }}
             pagination={{
-              onChange: (page, pageSize): any => setCurrentPage(page),
+              onChange: (page): any => setCurrentPage(page),
               position: ["bottomCenter"],
               pageSize: 10,
               total: Number(brandsData?.total),
@@ -188,7 +180,10 @@ const BrandsContent = () => {
       >
         <EditModal
           id={isOpenModalEdit?.id}
-          onClose={() => setIsOpenModalEdit(false)}
+          onClose={() => setIsOpenModalEdit({
+            isOpen: false,
+            id: null
+          })}
         />
       </Modal>
     </MaxWithLayout>

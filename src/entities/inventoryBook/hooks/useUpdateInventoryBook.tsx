@@ -10,7 +10,7 @@ export default function useUpdateInventoryBook(): {
 
   const queryClient = useQueryClient();
 
-  const { mutateAsync, isPending, isSuccess } = useMutation<any, Error, { idOrder: string, IdStatus: string }>({
+  const { mutateAsync, isPending, isSuccess } = useMutation<any, Error, any>({
     mutationFn: patchInventoryBook,
     onError: error => new Error(error?.message)
   });

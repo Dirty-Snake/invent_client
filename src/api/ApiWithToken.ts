@@ -27,7 +27,7 @@ const apiToken = axios.create({
 
 
 apiToken.interceptors.request.use(
-  async(config: { headers: { Authorization: string; }; }) => {
+  async(config: any) => {
     config.headers.Authorization = `Bearer ${$user.getState()?.accessToken}`;
     return config;
   },
@@ -42,10 +42,11 @@ apiToken.interceptors.response.use((response: any) => {
   const originalRequest = error.config;
   console.log(error.response.status)
   if (error.response.status === 401) {
-    const user = await api.post('/auth/refresh-token');
+    const user: any = await api.post<any>('/auth/refresh-token');
+    const token = user?.accessToken
     await setUser(user)
-    axios.defaults.headers.common['Authorization'] = `Bearer ${user?.accessToken}`;
-    return apiToken(originalRequest);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    return apiToken(originalRequest as any);
   } else {
     logout()
     return Promise.reject(error);

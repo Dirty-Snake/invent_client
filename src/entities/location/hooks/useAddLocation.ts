@@ -1,12 +1,12 @@
 import { useCallback } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addAssayToOrder, addLocation } from "../api/index";
+import { addLocation } from "../api/index";
 
 export const useAddLocation = () => {
 
   const queryClient = useQueryClient();
 
-  const { mutateAsync, ...options } = useMutation<any, Error, { idOrder: string, idAssay: string }>({
+  const { mutateAsync, ...options } = useMutation<any, Error, any>({
     mutationFn: addLocation,
     onError: error => new Error(error?.message)
   });

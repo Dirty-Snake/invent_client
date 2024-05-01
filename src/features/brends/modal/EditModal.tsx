@@ -4,12 +4,8 @@ import {
   Form,
   Input, message, Spin,
 } from "antd";
-
 import ModalHeader from "../../../shared/ModalHeader";
 import React, { useEffect } from "react";
-import useLocationDataByID from "../../../entities/location/hooks/useLocationDataByID";
-import { c, f } from "vite/dist/node/types.d-aGj9QkWt";
-import useUpdateLocation from "../../../entities/location/hooks/useUpdateLocation";
 import useUpdateBrand from "../../../entities/brends/hooks/useUpdateBrand";
 import useBrandDataByID from "../../../entities/brends/hooks/useBrandDataByID";
 

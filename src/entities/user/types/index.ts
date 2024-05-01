@@ -1,3 +1,3 @@
 interface User {
-  accessToken: string;
+  accessToken?: string;
 }

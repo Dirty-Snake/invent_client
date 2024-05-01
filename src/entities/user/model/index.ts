@@ -2,11 +2,11 @@ import { createEffect, createEvent, createStore } from 'effector'
 import { PreAuth } from "../api/index";
 import { persist } from 'effector-storage/local'
 
-export const $user = createStore<User | null>(null)
+export const $user = createStore<any>(null)
 
-export const setUser = createEvent<User>()
+export const setUser = createEvent<any>()
 
-export const logout = createEvent<User | null>()
+export const logout = createEvent<any>()
 
 persist({
   store: $user,

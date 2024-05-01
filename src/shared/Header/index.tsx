@@ -10,7 +10,7 @@ import logo from "../../assets/images/logo.jpg";
 const { Title } = Typography;
 const { useToken } = theme;
 
-const Header: FC<{ title: string }> = ({ title }) => {
+const Header: FC<{ title?: string }> = ({ title }) => {
 
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
 

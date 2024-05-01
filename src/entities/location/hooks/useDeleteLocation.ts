@@ -6,7 +6,7 @@ export const useDeleteLocation = () => {
 
   const queryClient = useQueryClient();
 
-  const { mutateAsync, ...options } = useMutation<any, Error, string>({
+  const { mutateAsync, isPending } = useMutation<any, Error, any>({
     mutationFn: deleteLocation,
     onError: error => new Error(error?.message)
   });
@@ -22,6 +22,6 @@ export const useDeleteLocation = () => {
 
   return {
     handleDelete,
-    ...options,
+    isLoading: isPending,
   };
 };

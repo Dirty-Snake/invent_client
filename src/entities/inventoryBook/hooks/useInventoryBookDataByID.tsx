@@ -8,7 +8,7 @@ export default function useInventoryBookDataByID(id: string): {
 
   const { data: locationDataById, isLoading } = useQuery({
     queryKey: ['INVENTORY_BOOK_DATA_BY_ID', id],
-    queryFn: async(id: string) => await geInventoryBookById(id),
+    queryFn: async(id: any) => await geInventoryBookById(id),
     retryOnMount: false
   });
 

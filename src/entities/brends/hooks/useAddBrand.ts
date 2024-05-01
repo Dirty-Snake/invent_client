@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addAssayToOrder, addBrand } from "../api/index";
+import { addBrand } from "../api/index";
 
 export const useAddBrand = () => {
 

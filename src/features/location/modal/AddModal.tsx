@@ -3,7 +3,6 @@ import {
   Col,
   Form,
   Input, message,
-  Select
 } from "antd";
 
 import ModalHeader from "../../../shared/ModalHeader";
