@@ -86,12 +86,12 @@ const HomeContent = () => {
   };
 
   const columns = [
-    {
-      title: "id",
-      dataIndex: "id",
-      key: "id",
-      width: "19%",
-    },
+    // {
+    //   title: "id",
+    //   dataIndex: "id",
+    //   key: "id",
+    //   width: "19%",
+    // },
     {
       title: "Название",
       dataIndex: "name",
@@ -131,10 +131,11 @@ const HomeContent = () => {
       dataIndex: "action",
       key: "action",
       width: "10%",
-      render: (record: any) => (
+      render: (text?: any, record?: any) => (
         <div
           style={{
             cursor: "pointer",
+            color: text ? '#000' : '#000'
           }}
         >
           <Dropdown
@@ -200,6 +201,7 @@ const HomeContent = () => {
       >
         <EditModal
           id={isOpenModalEdit?.id}
+          isOpen={isOpenModalEdit?.isOpen}
           onClose={() => setIsOpenModalEdit({
             isOpen: false,
             id: null

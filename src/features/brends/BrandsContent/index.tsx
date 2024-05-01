@@ -88,12 +88,12 @@ const BrandsContent = () => {
   };
 
   const columns = [
-    {
-      title: "id",
-      dataIndex: "id",
-      key: "id",
-      width: "30%",
-    },
+    // {
+    //   title: "id",
+    //   dataIndex: "id",
+    //   key: "id",
+    //   width: "30%",
+    // },
     {
       title: "Название",
       dataIndex: "name",

@@ -34,7 +34,7 @@ const Header: FC<{ title?: string }> = ({ title }) => {
 
   const mainNav = [
     {
-      title: 'Статистика ДТП',
+      title: 'Инвентарная карта',
       link: '/home',
     },
     {
@@ -42,7 +42,7 @@ const Header: FC<{ title?: string }> = ({ title }) => {
       link: '/location',
     },
     {
-      title: 'Брэнды',
+      title: 'Производитель',
       link: '/brends',
     },
   ]

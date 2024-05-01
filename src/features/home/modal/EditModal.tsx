@@ -16,18 +16,17 @@ import dayjs from "dayjs";
 import useUpdateInventoryBook from "../../../entities/inventoryBook/hooks/useUpdateInventoryBook";
 
 export default function EditModal({
-                                   onClose,
-                                    id
-                                 }: any){
+                                    onClose,
+                                    id,
+                                  }: any){
 
   const [form] = Form.useForm<{}>();
 
   const {
     locationDataById,
-    isLoading: isLoadingDataById
+    isLoading: isLoadingDataById,
+    isPending: isPendingDataById
   } = useInventoryBookDataByID(id)
-
-  console.log(locationDataById)
 
   const {
     handleUpdate,
@@ -53,20 +52,19 @@ export default function EditModal({
   } = useUserData()
 
   const onFinish = (value: any) => {
-    console.log(value)
-    handleUpdate(id, value)
+    handleUpdate(id, { ...value, decommissioned: Boolean(value.decommissioned) })
   }
 
-  useEffect(() =>{
+  useEffect(() => {
     setLimit(1000)
     setLimitBrand(1000)
-  },[])
+  }, [])
 
-  useEffect(() =>{
-    if (isSuccess){
+  useEffect(() => {
+    if (isSuccess) {
       message.success('Вы успешно обновили данные')
     }
-  },[isSuccess])
+  }, [isSuccess])
 
   useEffect(() => {
     form?.setFieldsValue({
@@ -82,9 +80,9 @@ export default function EditModal({
       brand_id: locationDataById?.info?.brand?.id,
       responsible_id: locationDataById?.responsible?.id,
     })
-  }, [locationDataById])
+  }, [locationDataById, isPendingDataById, id])
 
-  if (isLoadingDataById){
+  if (isLoadingDataById) {
     return (
       <div style={{
         width: '100%',
@@ -99,7 +97,7 @@ export default function EditModal({
 
   return (
     <div className={"modal-wrapper"} style={{ padding: "30px" }}>
-      <ModalHeader title={"Добавление"} onClose={() => {
+      <ModalHeader title={"Редактирование"} onClose={() => {
         form.resetFields()
         onClose()
       }} />
@@ -137,7 +135,7 @@ export default function EditModal({
           name={"factory_number"}
           label={"Заводской номер"}
         >
-          <Input type={'number'}/>
+          <Input type={'number'} />
         </Form.Item>
 
         <Form.Item
@@ -145,7 +143,7 @@ export default function EditModal({
           name={"period_use"}
           label={"Срок полезного использования (в месяцах)"}
         >
-          <Input type={'number'}/>
+          <Input type={'number'} />
         </Form.Item>
 
         <Form.Item
@@ -153,7 +151,7 @@ export default function EditModal({
           name={"cost"}
           label={"Стоимость"}
         >
-          <Input type={'number'}/>
+          <Input type={'number'} />
         </Form.Item>
 
         <Form.Item
@@ -165,7 +163,7 @@ export default function EditModal({
             showTime
             placeholder={""}
             format="YYYY-MM-DD HH:mm"
-            style={{width: "100%"}}
+            style={{ width: "100%" }}
           />
         </Form.Item>
 
@@ -174,7 +172,7 @@ export default function EditModal({
           name={"decommissioned"}
           label={"Списание предмета"}
         >
-          <Radio.Group >
+          <Radio.Group>
             <Radio value={true}>Да</Radio>
             <Radio value={false}>Нет</Radio>
           </Radio.Group>
@@ -193,7 +191,7 @@ export default function EditModal({
           >
             {
               isLoading
-                ?  <Spin />
+                ? <Spin />
                 :
                 locationData?.result?.map((option: any) => {
                   return (
@@ -209,7 +207,7 @@ export default function EditModal({
         <Form.Item
           rules={[{ required: true }]}
           name={"brand_id"}
-          label={"Брэнд"}
+          label={"Производитель"}
         >
           <Select
             style={{
@@ -219,7 +217,7 @@ export default function EditModal({
           >
             {
               isLoadingBrand
-                ?  <Spin />
+                ? <Spin />
                 :
                 brandsData?.result?.map((option: any) => {
                   return (
@@ -245,7 +243,7 @@ export default function EditModal({
           >
             {
               isLoadingUsers
-                ?  <Spin />
+                ? <Spin />
                 :
                 userData?.map((option: any) => {
                   return (

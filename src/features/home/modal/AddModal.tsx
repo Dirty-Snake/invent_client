@@ -171,7 +171,7 @@ export default function AddModal({
         <Form.Item
           rules={[{ required: true }]}
           name={"brand_id"}
-          label={"Брэнд"}
+          label={"Производитель"}
         >
           <Select
             style={{

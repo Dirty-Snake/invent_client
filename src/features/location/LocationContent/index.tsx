@@ -88,12 +88,12 @@ const LocationContent = () => {
   };
 
   const columns = [
-    {
-      title: "id",
-      dataIndex: "id",
-      key: "id",
-      width: "45%",
-    },
+    // {
+    //   title: "id",
+    //   dataIndex: "id",
+    //   key: "id",
+    //   width: "45%",
+    // },
     {
       title: "Название",
       dataIndex: "name",

@@ -16,7 +16,7 @@ const SideBarNav = () => {
 
   const mainNav = [
     {
-      title: 'Статистика ДТП',
+      title: 'Инвентарная карта',
       link: '/home',
     },
     {
@@ -24,7 +24,7 @@ const SideBarNav = () => {
       link: '/location',
     },
     {
-      title: 'Брэнды',
+      title: 'Производитель',
       link: '/brends',
     },
   ]

@@ -39,18 +39,17 @@ apiToken.interceptors.request.use(
 apiToken.interceptors.response.use((response: any) => {
   return response
 }, async function (error: any){
-  const originalRequest = error.config;
-  console.log(error.response.status)
-  if (error.response.status === 401) {
-    const user: any = await api.post<any>('/auth/refresh-token');
-    const token = user?.accessToken
-    await setUser(user)
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    return apiToken(originalRequest as any);
-  } else {
-    logout()
-    return Promise.reject(error);
-  }
+  // const originalRequest = error.config;
+  // console.log(error.response.status)
+  // if (error.response.status === 401) {
+  //   const user: any = await api.post<any>('/auth/refresh-token');
+  //   console.log('user')
+  //   console.log(user)
+  //   // const token = user?.accessToken
+  //   await setUser(user)
+  //   axios.defaults.headers.common['Authorization'] = `Bearer ${user}`;
+  //   return apiToken(originalRequest as any);
+  // }
 });
 
 
