@@ -12,8 +12,7 @@ const AppRoutes: FC = () => {
 
   },[user])
 
-  return user?.user?.phone ? <SecureRoutes /> : <PublicRoutes />;
-  // return <SecureRoutes />;
+  return user?.accessToken ? <SecureRoutes /> : <PublicRoutes />;
 };
 
 export default AppRoutes;

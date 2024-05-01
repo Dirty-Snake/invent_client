@@ -2,8 +2,8 @@ import React, { FC } from 'react';
 import { Navigate, Route, Routes } from "react-router-dom";
 import AppLayout from "../layouts/AppLayout/index";
 import HomePage from "../pages/home/HomePage";
-import AnalysisPage from "../pages/analysis/AnalysisPage";
-import FactorsPage from "../pages/factors/FactorsPage";
+import LocationPage from "../pages/location/LocationPage";
+import BrendsPage from "../pages/brends/BrendsPage";
 
 const SecureRoutes: FC = () => {
 
@@ -13,8 +13,8 @@ const SecureRoutes: FC = () => {
 
       <Route path={"/"} element={<AppLayout />}>
         <Route path="home" element={<HomePage />} />
-        <Route path="factors" element={<FactorsPage />} />
-        <Route path="analysis" element={<AnalysisPage />} />
+        <Route path="brends" element={<BrendsPage />} />
+        <Route path="location" element={<LocationPage />} />
 
       </Route>
 

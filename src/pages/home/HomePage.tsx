@@ -5,7 +5,7 @@ import PageLayout from "../../layouts/PageLayout/index";
 const HomePage: FC = () => {
 
   return (
-    <PageLayout title={'Главная'}>
+    <PageLayout title={'Инвентарная книга'}>
       <HomeContent />
     </PageLayout>
   );

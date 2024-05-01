@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { ApiErrorHandler } from "../middleware/api-error-handler";
 import { HttpErrorHandler } from "../middleware/http-error-handler";
 import { message } from "antd";
+import { $user } from "../entities/user/model/index";
 
 const apiToken = axios.create({
   baseURL: import.meta.env.VITE_REACT_APP_API_URL,
@@ -26,6 +27,17 @@ const apiToken = axios.create({
     );
   },
 });
+
+
+apiToken.interceptors.request.use(
+  async (config) => {
+    config.headers.Authorization = `Bearer ${$user.getState()?.accessToken}`;
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 apiToken.interceptors.response.use(
   (response: AxiosResponse<any, any>) => {

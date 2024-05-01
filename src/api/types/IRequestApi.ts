@@ -1,4 +1,5 @@
 export interface IResponseApiData<T> {
+  status: number;
   code: string;
   data: T;
   message: string;

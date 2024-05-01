@@ -1,13 +1,13 @@
 import React from 'react';
 import PageLayout from "../../layouts/PageLayout/index";
-import AnalysisContent from "../../features/analysis/AnalysisContent/index";
+import LocationContent from "../../features/location/LocationContent/index";
 
-const AnalysisPage = () => {
+const LocationPage = () => {
   return (
     <PageLayout title={'Методы анализа'}>
-      <AnalysisContent />
+      <LocationContent />
     </PageLayout>
   );
 };
 
-export default AnalysisPage;
+export default LocationPage;

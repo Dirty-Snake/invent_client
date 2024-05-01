@@ -9,7 +9,7 @@ const AppLayout: FC = () => {
 
   const [user] = useUnit([$user])
 
-  const isUserExist = user?.user?.phone
+  const isUserExist = user?.accessToken
 
   return (
     <div

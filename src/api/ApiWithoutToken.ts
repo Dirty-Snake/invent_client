@@ -46,31 +46,5 @@ api.interceptors.response.use(
   }
 );
 
-const apiWithoutApp = axios.create({
-  baseURL: import.meta.env.VITE_REACT_APP_API_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-  timeout: 10000,
-  timeoutErrorMessage: "Превышено время ожидания ответа от сервера",
-  validateStatus: function (status){
-    return (status >= 200 && status < 300) || status === 422 || status === 401;
-  },
-});
 
-apiWithoutApp.interceptors.response.use(
-  (response: AxiosResponse<any, any>) => {
-    try {
-      return Promise.resolve(ApiErrorHandler(response));
-    } catch (e: any) {
-      message.error(e.message);
-      return Promise.reject(e);
-    }
-  },
-  (error) => {
-    HttpErrorHandler(error);
-    return Promise.reject(error);
-  }
-);
-
-export { api, apiWithoutApp };
+export { api };

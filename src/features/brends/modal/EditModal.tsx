@@ -5,7 +5,7 @@ import {
   Input,
 } from "antd";
 
-import ModalHeader from "../../shared/ModalHeader";
+import ModalHeader from "../../../shared/ModalHeader";
 import React from "react";
 
 export default function EditModal({

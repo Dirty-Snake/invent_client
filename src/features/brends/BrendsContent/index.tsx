@@ -20,17 +20,9 @@ import BucketIcon from "../../../assets/Icons/BucketIcon";
 import { MoreOutlined } from "@ant-design/icons/lib";
 import AddModal from "../modal/AddModal";
 import EditModal from "../modal/EditModal";
-import useInventoryBookData from "../../../entities/inventoryBook/hooks/useInventoryBookData";
 
 
-const HomeContent = () => {
-
-  const {
-    inventoryBookData,
-  } = useInventoryBookData()
-
-  console.log('inventoryBookData')
-  console.log(inventoryBookData)
+const BrendsContent = () => {
 
   const [isOpenModalAdd, setIsOpenModalAdd] = useState(false)
   const [isOpenModalEdit, setIsOpenModalEdit] = useState(false)
@@ -135,11 +127,13 @@ const HomeContent = () => {
   return (
     <MaxWithLayout>
       <div className={styles.homeСontent}>
+
         <div className={styles.top}>
           <Button onClick={() => setIsOpenModalAdd(true)}>
             Добавить
           </Button>
         </div>
+
         <div className={styles.table}>
 
           <Table
@@ -158,6 +152,7 @@ const HomeContent = () => {
             }}
           />
         </div>
+
       </div>
 
       <Modal
@@ -185,4 +180,4 @@ const HomeContent = () => {
   );
 };
 
-export default HomeContent;
+export default BrendsContent;

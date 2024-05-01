@@ -1,14 +1,14 @@
 import React from 'react';
-import FactorsContent from "../../features/factors/FactorsContent/index";
+import BrendsContent from "../../features/brends/BrendsContent/index";
 import HomeContent from "../../features/home/HomeContent/index";
 import PageLayout from "../../layouts/PageLayout/index";
 
-const FactorsPage = () => {
+const BrendsPage = () => {
   return (
     <PageLayout title={'Факторы'}>
-      <FactorsContent />
+      <BrendsContent />
     </PageLayout>
   );
 };
 
-export default FactorsPage;
+export default BrendsPage;

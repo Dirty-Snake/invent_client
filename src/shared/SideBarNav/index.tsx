@@ -3,15 +3,12 @@ import styles from './style.module.scss';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { theme, Typography } from "antd";
 import { useUnit } from "effector-react";
-import { $user } from "../../entities/user/model/index";
+import { $user, logout } from "../../entities/user/model/index";
+import logo from '../../assets/images/logo.jpg'
 
 const { useToken } = theme;
 const { Title } = Typography;
 
-const names: any = {
-  'orders': 'Заявки',
-  'book': 'Тестовое'
-}
 
 const SideBarNav = () => {
 
@@ -27,12 +24,12 @@ const SideBarNav = () => {
       link: '/home',
     },
     {
-      title: 'Перечень факторов',
-      link: '/factors',
+      title: 'Местонахождения',
+      link: '/location',
     },
     {
-      title: 'Перечень методов анализа',
-      link: '/analysis',
+      title: 'Брэнды',
+      link: '/brends',
     },
   ]
 
@@ -41,7 +38,7 @@ const SideBarNav = () => {
       <div className={styles.barWrap}>
 
         <div className={styles.barIcon}>
-          Лого
+          <img src={logo} alt="" />
         </div>
 
         <div className={styles.mainNav}>
@@ -64,7 +61,13 @@ const SideBarNav = () => {
           }
         </div>
 
-      </div>
+        <div className={styles.mainNav} onClick={() => logout()}>
+          <button>
+            Выйти
+          </button>
+        </div>
+
+        </div>
     </div>
   );
 };

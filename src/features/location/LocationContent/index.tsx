@@ -20,28 +20,31 @@ import BucketIcon from "../../../assets/Icons/BucketIcon";
 import { MoreOutlined } from "@ant-design/icons/lib";
 import AddModal from "../modal/AddModal";
 import EditModal from "../modal/EditModal";
+import useLocationData from "../../../entities/location/hooks/useLocationData";
+import { useDeleteLocation } from "../../../entities/location/hooks/useDeleteLocation";
 
 
-const FactorsContent = () => {
+const LocationContent = () => {
+
+  const {
+    locationData,
+    currentPage,
+    setCurrentPage,
+    isLoading
+  } = useLocationData()
+
+  const {
+    handleDelete,
+    isLoading: isLoadingDelete
+  } = useDeleteLocation()
 
 
-  const [isOpenModalAdd, setIsOpenModalAdd] = useState(false)
-  const [isOpenModalEdit, setIsOpenModalEdit] = useState(false)
+  const [isOpenModalAdd, setIsOpenModalAdd] = useState<boolean>(false)
+  const [isOpenModalEdit, setIsOpenModalEdit] = useState<{id: string | null, isOpen: boolean}>({
+    id: null,
+    isOpen: false
+  })
 
-  const data = [
-    {
-      id: 1,
-      cost: 1
-    },
-    {
-      id: 2,
-      cost: 2
-    },
-    {
-      id: 3,
-      cost: 3
-    },
-  ]
   const productsItemsForEdit: MenuProps["items"] = [
     {
       label: (
@@ -75,13 +78,16 @@ const FactorsContent = () => {
   const getProductsActions = (record: any) => {
     return {
       items: productsItemsForEdit,
-      onClick: ({ item, key, keyPath, domEvent }: any) => {
+      onClick: ({ key }: any) => {
         switch (key) {
           case "EDIT":
-            setIsOpenModalEdit(true)
+            setIsOpenModalEdit({
+              id: record?.id,
+              isOpen: true
+            })
             break;
           case "DELETE":
-
+            handleDelete(record?.id)
             break;
         }
       },
@@ -96,9 +102,9 @@ const FactorsContent = () => {
       width: "45%",
     },
     {
-      title: "Стоимость руб",
-      dataIndex: "cost",
-      key: "cost",
+      title: "Название",
+      dataIndex: "name",
+      key: "name",
       width: "45%",
     },
     {
@@ -138,18 +144,18 @@ const FactorsContent = () => {
         <div className={styles.table}>
 
           <Table
-            // loading={isLoading}
+            loading={isLoading || isLoadingDelete}
             className={"product-arrival-table"}
             columns={columns}
-            dataSource={data}
+            dataSource={locationData?.result || []}
             scroll={{ x: true }}
             pagination={{
-              // onChange: (page, pageSize): any => setCurrentPage(page),
+              onChange: (page, pageSize): any => setCurrentPage(page),
               position: ["bottomCenter"],
-              // pageSize: Number(currentPageSize),
-              // total: Number(costPriceData?.total),
+              pageSize: 10,
+              total: Number(locationData?.total),
               showSizeChanger: false,
-              // current: currentPage,
+              current: currentPage,
             }}
           />
         </div>
@@ -168,12 +174,13 @@ const FactorsContent = () => {
       </Modal>
 
       <Modal
-        open={isOpenModalEdit}
+        open={isOpenModalEdit.isOpen}
         closable={false}
         footer={null}
         width={600}
       >
         <EditModal
+          id={isOpenModalEdit?.id}
           onClose={() => setIsOpenModalEdit(false)}
         />
       </Modal>
@@ -181,4 +188,4 @@ const FactorsContent = () => {
   );
 };
 
-export default FactorsContent;
+export default LocationContent;

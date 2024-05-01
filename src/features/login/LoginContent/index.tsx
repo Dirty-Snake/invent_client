@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import styles from './style.module.scss';
 import { Button, Form, Input, Typography } from "antd";
 import { sendPreAuthData } from "../../../entities/user/model/index";
@@ -16,6 +16,13 @@ const LoginContent: FC = () => {
   const onFinish = (values: any) => {
     sendPreAuthData(values)
   }
+
+  useEffect(() =>{
+    form.setFieldsValue({
+      username: 'admin',
+      password: '52Test52!!'
+    })
+  },[])
 
   return (
     <MaxWithLayout>
@@ -44,7 +51,7 @@ const LoginContent: FC = () => {
           </Title>
 
           <Form.Item
-            name="login"
+            name="username"
             required={true}
           >
             <Input

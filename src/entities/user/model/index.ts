@@ -12,10 +12,9 @@ persist({
   keyPrefix: "v2",
 });
 
-export const sendPreAuthData = createEffect<{login: string, password: string}, any, Error>(async(data: any) => {
+export const sendPreAuthData = createEffect<{username: string, password: string}, any, Error>(async(data: any) => {
   const res = await PreAuth(data);
-  console.log(res)
-  if (!res?.data?.success) throw new Error(res.message);
+  if (res?.status !== 200) throw new Error(res.message);
   return res.data;
 })
 

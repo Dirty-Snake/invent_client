@@ -4,7 +4,7 @@ import { Typography } from "antd";
 
 const { Title } = Typography;
 
-const Header: FC = () => {
+const Header: FC<{title: string}> = ({title}) => {
 
   return (
     <div className={styles['header']}>
@@ -20,7 +20,7 @@ const Header: FC = () => {
             fontWeight: 200
           }}
         >
-          Авторизация
+          {title || 'Авторизация'}
         </Title>
       </div>
     </div>
