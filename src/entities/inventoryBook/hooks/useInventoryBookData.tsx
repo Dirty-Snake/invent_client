@@ -7,7 +7,7 @@ export default function useInventoryBookData(): {
   currentPage: number,
   locationId?: string,
   setCurrentPage: (page: number) =>void,
-  setLocationId?: (page: string) =>void,
+  setLocationId: (page: any) =>void,
   isLoading?: boolean;
 } {
 

@@ -5,7 +5,7 @@ import {
   Table,
   Modal,
   Dropdown,
-  MenuProps, Select, Spin, Form,
+  MenuProps, Select, Spin
 } from "antd";
 import MaxWithLayout from "../../../layouts/MaxWithLayout/index";
 import EditIcon from "../../../assets/Icons/EditIcon";

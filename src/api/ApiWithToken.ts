@@ -1,5 +1,5 @@
 import axios from "axios";
-import { $user, logout, setUser } from "../entities/user/model/index";
+import { $user, setUser } from "../entities/user/model/index";
 import { api } from "./ApiWithoutToken";
 
 const apiToken = axios.create({

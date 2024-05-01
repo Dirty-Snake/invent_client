@@ -105,10 +105,11 @@ const LocationContent = () => {
       dataIndex: "action",
       key: "action",
       width: "10%",
-      render: (record?: any) => (
+      render: (text?: any, record?: any) => (
         <div
           style={{
             cursor: "pointer",
+            color: text ? '#000' : '#000'
           }}
         >
           <Dropdown
@@ -166,20 +167,23 @@ const LocationContent = () => {
         />
       </Modal>
 
+      {isOpenModalEdit?.id &&
       <Modal
-        open={isOpenModalEdit.isOpen}
-        closable={false}
-        footer={null}
-        width={600}
+          open={isOpenModalEdit.isOpen}
+          closable={false}
+          footer={null}
+          width={600}
       >
-        <EditModal
-          id={isOpenModalEdit?.id}
-          onClose={() => setIsOpenModalEdit({
-            isOpen: false,
-            id: null
-          })}
-        />
+          <EditModal
+              id={isOpenModalEdit?.id}
+              onClose={() => setIsOpenModalEdit({
+                isOpen: false,
+                id: null
+              })}
+          />
       </Modal>
+      }
+
     </MaxWithLayout>
   );
 };
