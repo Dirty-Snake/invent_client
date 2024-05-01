@@ -20,27 +20,32 @@ import BucketIcon from "../../../assets/Icons/BucketIcon";
 import { MoreOutlined } from "@ant-design/icons/lib";
 import AddModal from "../modal/AddModal";
 import EditModal from "../modal/EditModal";
+import { useDeleteLocation } from "../../../entities/location/hooks/useDeleteLocation";
+import useBrandData from "../../../entities/brends/hooks/useBrandData";
+import { useDeleteBrand } from "../../../entities/brends/hooks/useDeleteBrand";
 
 
-const BrendsContent = () => {
+const BrandsContent = () => {
 
-  const [isOpenModalAdd, setIsOpenModalAdd] = useState(false)
-  const [isOpenModalEdit, setIsOpenModalEdit] = useState(false)
+  const {
+    brandsData,
+    currentPage,
+    setCurrentPage,
+    isLoading
+  } = useBrandData()
 
-  const data = [
-    {
-      id: 1,
-      cost: 1
-    },
-    {
-      id: 2,
-      cost: 2
-    },
-    {
-      id: 3,
-      cost: 3
-    },
-  ]
+  const {
+    handleDelete,
+    isLoading: isLoadingDelete
+  } = useDeleteBrand()
+
+
+  const [isOpenModalAdd, setIsOpenModalAdd] = useState<boolean>(false)
+  const [isOpenModalEdit, setIsOpenModalEdit] = useState<{id: string | null, isOpen: boolean}>({
+    id: null,
+    isOpen: false
+  })
+
   const productsItemsForEdit: MenuProps["items"] = [
     {
       label: (
@@ -74,13 +79,16 @@ const BrendsContent = () => {
   const getProductsActions = (record: any) => {
     return {
       items: productsItemsForEdit,
-      onClick: ({ item, key, keyPath, domEvent }: any) => {
+      onClick: ({ key }: any) => {
         switch (key) {
           case "EDIT":
-            setIsOpenModalEdit(true)
+            setIsOpenModalEdit({
+              id: record?.id,
+              isOpen: true
+            })
             break;
           case "DELETE":
-
+            handleDelete(record?.id)
             break;
         }
       },
@@ -92,13 +100,19 @@ const BrendsContent = () => {
       title: "id",
       dataIndex: "id",
       key: "id",
-      width: "45%",
+      width: "30%",
     },
     {
-      title: "Стоимость руб",
-      dataIndex: "cost",
-      key: "cost",
-      width: "45%",
+      title: "Название",
+      dataIndex: "name",
+      key: "name",
+      width: "30%",
+    },
+    {
+      title: "Описание",
+      dataIndex: "description",
+      key: "description",
+      width: "30%",
     },
     {
       title: "",
@@ -137,18 +151,18 @@ const BrendsContent = () => {
         <div className={styles.table}>
 
           <Table
-            // loading={isLoading}
+            loading={isLoading || isLoadingDelete}
             className={"product-arrival-table"}
             columns={columns}
-            dataSource={data}
+            dataSource={brandsData?.result || []}
             scroll={{ x: true }}
             pagination={{
-              // onChange: (page, pageSize): any => setCurrentPage(page),
+              onChange: (page, pageSize): any => setCurrentPage(page),
               position: ["bottomCenter"],
-              // pageSize: Number(currentPageSize),
-              // total: Number(costPriceData?.total),
+              pageSize: 10,
+              total: Number(brandsData?.total),
               showSizeChanger: false,
-              // current: currentPage,
+              current: currentPage,
             }}
           />
         </div>
@@ -167,12 +181,13 @@ const BrendsContent = () => {
       </Modal>
 
       <Modal
-        open={isOpenModalEdit}
+        open={isOpenModalEdit.isOpen}
         closable={false}
         footer={null}
         width={600}
       >
         <EditModal
+          id={isOpenModalEdit?.id}
           onClose={() => setIsOpenModalEdit(false)}
         />
       </Modal>
@@ -180,4 +195,4 @@ const BrendsContent = () => {
   );
 };
 
-export default BrendsContent;
+export default BrandsContent;

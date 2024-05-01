@@ -4,6 +4,8 @@ import { persist } from 'effector-storage/local'
 
 export const $user = createStore<User | null>(null)
 
+export const setUser = createEvent<User>()
+
 export const logout = createEvent<User | null>()
 
 persist({
@@ -21,5 +23,6 @@ export const sendPreAuthData = createEffect<{username: string, password: string}
 
 $user.on(logout, () => null)
 $user.on(sendPreAuthData.doneData, (_, t) => t)
+$user.on(setUser, (_, t) => t)
 
 

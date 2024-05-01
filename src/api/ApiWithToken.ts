@@ -1,8 +1,5 @@
-import axios, { AxiosResponse } from "axios";
-import { ApiErrorHandler } from "../middleware/api-error-handler";
-import { HttpErrorHandler } from "../middleware/http-error-handler";
-import { message } from "antd";
-import { $user } from "../entities/user/model/index";
+import axios from "axios";
+import { $user, setUser } from "../entities/user/model/index";
 
 const apiToken = axios.create({
   baseURL: import.meta.env.VITE_REACT_APP_API_URL,
@@ -30,28 +27,28 @@ const apiToken = axios.create({
 
 
 apiToken.interceptors.request.use(
-  async (config) => {
+  async (config: { headers: { Authorization: string; }; }) => {
     config.headers.Authorization = `Bearer ${$user.getState()?.accessToken}`;
     return config;
   },
-  (error) => {
+  (error: any) => {
     return Promise.reject(error);
   }
 );
 
-apiToken.interceptors.response.use(
-  (response: AxiosResponse<any, any>) => {
-    try {
-      return Promise.resolve(ApiErrorHandler(response));
-    } catch (e: any) {
-      message.error(e.message);
-      return Promise.reject(e);
-    }
-  },
-  (error) => {
-    HttpErrorHandler(error);
-    return Promise.reject(error);
+apiToken.interceptors.response.use((response: any) => {
+  return response
+}, async function (error: any) {
+  const originalRequest = error.config;
+  if (error.response.status === 403 && !originalRequest._retry) {
+    originalRequest._retry = true;
+    const user = await apiToken.post('/auth/refresh-token');
+    setUser(user)
+    axios.defaults.headers.common['Authorization'] = `Bearer ${user?.accessToken}`;
+    return apiToken(originalRequest);
   }
-);
+  return Promise.reject(error);
+});
+
 
 export { apiToken };

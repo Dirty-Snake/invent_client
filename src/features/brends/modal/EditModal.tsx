@@ -2,20 +2,63 @@ import {
   Button,
   Col,
   Form,
-  Input,
+  Input, message, Spin,
 } from "antd";
 
 import ModalHeader from "../../../shared/ModalHeader";
-import React from "react";
+import React, { useEffect } from "react";
+import useLocationDataByID from "../../../entities/location/hooks/useLocationDataByID";
+import { c, f } from "vite/dist/node/types.d-aGj9QkWt";
+import useUpdateLocation from "../../../entities/location/hooks/useUpdateLocation";
+import useUpdateBrand from "../../../entities/brends/hooks/useUpdateBrand";
+import useBrandDataByID from "../../../entities/brends/hooks/useBrandDataByID";
 
 export default function EditModal({
                                     onClose,
+                                    id
                                   }: any){
 
   const [form] = Form.useForm<{}>();
 
-  const onFinish = (value: any) => {
+  const {
+    brandDataById,
+    isLoading
+  } = useBrandDataByID(id)
 
+  const {
+    handleUpdate,
+    isPending,
+    isSuccess,
+  } = useUpdateBrand()
+
+  const onFinish = (value: any) => {
+    handleUpdate(id, value)
+  }
+
+  useEffect(() => {
+    form?.setFieldsValue({
+      name: brandDataById?.name,
+      description: brandDataById?.description
+    })
+  }, [brandDataById])
+
+  useEffect(() =>{
+    if (isSuccess){
+      message.success('Вы успешно обновили данные')
+    }
+  },[isSuccess])
+
+  if (isLoading){
+    return (
+      <div style={{
+        width: '100%',
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+      }}>
+        <Spin />
+      </div>
+    )
   }
 
   return (
@@ -31,22 +74,15 @@ export default function EditModal({
       >
         <Form.Item
           rules={[{ required: true }]}
-          name={"cost"}
-          label={"1"}
+          name={"name"}
+          label={"Название"}
         >
-          <Input type={"number"} />
+          <Input />
         </Form.Item>
         <Form.Item
           rules={[{ required: true }]}
-          name={"count"}
-          label={"2"}
-        >
-          <Input type={"number"} />
-        </Form.Item>
-        <Form.Item
-          rules={[{ required: true }]}
-          name={"numberDT"}
-          label={"3"}
+          name={"description"}
+          label={"Описание"}
         >
           <Input />
         </Form.Item>
@@ -57,7 +93,7 @@ export default function EditModal({
             className={"button"}
             style={{ fontSize: "12px", width: "50%" }}
             htmlType={"submit"}
-            // loading={isLoading}
+            loading={isPending}
           >
             Сохранить
           </Button>
