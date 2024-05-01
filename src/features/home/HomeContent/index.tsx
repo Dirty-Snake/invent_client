@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './style.module.scss';
 import {
   Button,
   Table,
   Modal,
   Dropdown,
-  MenuProps,
+  MenuProps, Select, Spin, Form,
 } from "antd";
 import MaxWithLayout from "../../../layouts/MaxWithLayout/index";
 import EditIcon from "../../../assets/Icons/EditIcon";
@@ -15,6 +15,9 @@ import AddModal from "../modal/AddModal";
 import EditModal from "../modal/EditModal";
 import useInventoryBookData from "../../../entities/inventoryBook/hooks/useInventoryBookData";
 import { useDeleteInventoryBook } from "../../../entities/inventoryBook/hooks/useDeleteInventoryBook";
+import EyeIcon from "../../../assets/Icons/EyeIcon";
+import useLocationData from "../../../entities/location/hooks/useLocationData";
+import InfoModal from "../modal/InfoModal";
 
 const HomeContent = () => {
 
@@ -22,8 +25,16 @@ const HomeContent = () => {
     inventoryBookData,
     currentPage,
     setCurrentPage,
-    isLoading
+    isLoading,
+    locationId,
+    setLocationId
   } = useInventoryBookData()
+
+  const {
+    locationData,
+    setLimit,
+    isLoading: isLoadingLocation
+  } = useLocationData()
 
   const {
     handleDelete,
@@ -31,7 +42,12 @@ const HomeContent = () => {
   } = useDeleteInventoryBook()
 
   const [isOpenModalAdd, setIsOpenModalAdd] = useState<boolean>(false)
-  const [isOpenModalEdit, setIsOpenModalEdit] = useState<{id: string | null, isOpen: boolean}>({
+
+  const [isOpenModalInfo, setIsOpenModalInfo] = useState<{ id: string | null, isOpen: boolean }>({
+    id: null,
+    isOpen: false
+  })
+  const [isOpenModalEdit, setIsOpenModalEdit] = useState<{ id: string | null, isOpen: boolean }>({
     id: null,
     isOpen: false
   })
@@ -86,12 +102,25 @@ const HomeContent = () => {
   };
 
   const columns = [
-    // {
-    //   title: "id",
-    //   dataIndex: "id",
-    //   key: "id",
-    //   width: "19%",
-    // },
+    {
+      title: "",
+      dataIndex: "id",
+      key: "id",
+      width: "19%",
+      render: (text: any) => (
+        <div
+          style={{
+            cursor: "pointer"
+          }}
+          onClick={() => setIsOpenModalInfo({
+            isOpen: true,
+            id: text
+          })}
+        >
+          <EyeIcon />
+        </div>
+      )
+    },
     {
       title: "Название",
       dataIndex: "name",
@@ -105,7 +134,7 @@ const HomeContent = () => {
       width: "19%",
       render: (text: any) => (
         <div>
-          {text ? 'Да': 'Нет'}
+          {text ? 'Да' : 'Нет'}
         </div>
       )
     },
@@ -151,6 +180,10 @@ const HomeContent = () => {
     },
   ];
 
+  useEffect(() => {
+    setLimit(1000)
+  }, [])
+
   return (
     <MaxWithLayout>
       <div className={styles.homeСontent}>
@@ -159,6 +192,32 @@ const HomeContent = () => {
           <Button onClick={() => setIsOpenModalAdd(true)}>
             Добавить
           </Button>
+
+          <Select
+            style={{
+              width: '100%'
+            }}
+            value={locationId}
+            onChange={(e: any) => setLocationId(e)}
+            filterOption={false}
+          >
+            <Select.Option key={null} value={null}>
+              Не выбрано
+            </Select.Option>
+            {
+              isLoadingLocation
+                ? <Spin />
+                :
+                locationData?.result?.map((option: any) => {
+                  return (
+                    <Select.Option key={option?.id?.toString()} value={option?.id?.toString()}>
+                      {option?.name}
+                    </Select.Option>
+                  );
+                })
+            }
+          </Select>
+
         </div>
 
         <div className={styles.table}>
@@ -193,21 +252,40 @@ const HomeContent = () => {
         />
       </Modal>
 
+      {isOpenModalEdit?.id &&
       <Modal
-        open={isOpenModalEdit.isOpen}
-        closable={false}
-        footer={null}
-        width={600}
+          open={isOpenModalEdit.isOpen}
+          closable={false}
+          footer={null}
+          width={600}
       >
-        <EditModal
-          id={isOpenModalEdit?.id}
-          isOpen={isOpenModalEdit?.isOpen}
-          onClose={() => setIsOpenModalEdit({
-            isOpen: false,
-            id: null
-          })}
-        />
+          <EditModal
+              id={isOpenModalEdit?.id}
+              onClose={() => setIsOpenModalEdit({
+                isOpen: false,
+                id: null
+              })}
+          />
       </Modal>
+      }
+
+      {isOpenModalInfo?.id &&
+      <Modal
+          open={isOpenModalInfo.isOpen}
+          closable={false}
+          footer={null}
+          width={600}
+      >
+          <InfoModal
+              id={isOpenModalInfo?.id}
+              onClose={() => setIsOpenModalInfo({
+                isOpen: false,
+                id: null
+              })}
+          />
+      </Modal>
+      }
+
     </MaxWithLayout>
   );
 };

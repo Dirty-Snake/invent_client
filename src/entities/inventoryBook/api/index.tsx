@@ -1,7 +1,14 @@
 import { apiToken } from "../../../api/ApiWithToken";
 
-export async function getInventoryBookData(currentPage: number){
-  const response = await apiToken.get<any>(`/items?page=${currentPage}&limit=10`);
+export async function getInventoryBookData(currentPage: number, locationId: string){
+
+  let response;
+  if (locationId) {
+    response = await apiToken.get<any>(`/items?page=${currentPage}&limit=10&location_id=${locationId}`);
+  } else {
+    response = await apiToken.get<any>(`/items?page=${currentPage}&limit=10`);
+  }
+
   if (response?.status !== 200) {
     throw new Error(response.data.message);
   }

@@ -25,7 +25,6 @@ export default function EditModal({
   const {
     locationDataById,
     isLoading: isLoadingDataById,
-    isPending: isPendingDataById
   } = useInventoryBookDataByID(id)
 
   const {
@@ -80,7 +79,7 @@ export default function EditModal({
       brand_id: locationDataById?.info?.brand?.id,
       responsible_id: locationDataById?.responsible?.id,
     })
-  }, [locationDataById, isPendingDataById, id])
+  }, [locationDataById])
 
   if (isLoadingDataById) {
     return (
