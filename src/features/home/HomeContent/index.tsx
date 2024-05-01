@@ -21,34 +21,28 @@ import { MoreOutlined } from "@ant-design/icons/lib";
 import AddModal from "../modal/AddModal";
 import EditModal from "../modal/EditModal";
 import useInventoryBookData from "../../../entities/inventoryBook/hooks/useInventoryBookData";
-
+import { useDeleteInventoryBook } from "../../../entities/inventoryBook/hooks/useDeleteInventoryBook";
 
 const HomeContent = () => {
 
   const {
     inventoryBookData,
+    currentPage,
+    setCurrentPage,
+    isLoading
   } = useInventoryBookData()
 
-  console.log('inventoryBookData')
-  console.log(inventoryBookData)
+  const {
+    handleDelete,
+    isLoading: isLoadingDelete
+  } = useDeleteInventoryBook()
 
-  const [isOpenModalAdd, setIsOpenModalAdd] = useState(false)
-  const [isOpenModalEdit, setIsOpenModalEdit] = useState(false)
+  const [isOpenModalAdd, setIsOpenModalAdd] = useState<boolean>(false)
+  const [isOpenModalEdit, setIsOpenModalEdit] = useState<{id: string | null, isOpen: boolean}>({
+    id: null,
+    isOpen: false
+  })
 
-  const data = [
-    {
-      id: 1,
-      cost: 1
-    },
-    {
-      id: 2,
-      cost: 2
-    },
-    {
-      id: 3,
-      cost: 3
-    },
-  ]
   const productsItemsForEdit: MenuProps["items"] = [
     {
       label: (
@@ -82,13 +76,16 @@ const HomeContent = () => {
   const getProductsActions = (record: any) => {
     return {
       items: productsItemsForEdit,
-      onClick: ({ item, key, keyPath, domEvent }: any) => {
+      onClick: ({ key }: any) => {
         switch (key) {
           case "EDIT":
-            setIsOpenModalEdit(true)
+            setIsOpenModalEdit({
+              id: record?.id,
+              isOpen: true
+            })
             break;
           case "DELETE":
-
+            handleDelete(record?.id)
             break;
         }
       },
@@ -100,13 +97,41 @@ const HomeContent = () => {
       title: "id",
       dataIndex: "id",
       key: "id",
-      width: "45%",
+      width: "19%",
     },
     {
-      title: "Стоимость руб",
-      dataIndex: "cost",
-      key: "cost",
-      width: "45%",
+      title: "Название",
+      dataIndex: "name",
+      key: "name",
+      width: "19%",
+    },
+    {
+      title: "Списание предмета",
+      dataIndex: "decommissioned",
+      key: "decommissioned",
+      width: "19%",
+      render: (text: any) => (
+        <div>
+          {text ? 'Да': 'Нет'}
+        </div>
+      )
+    },
+    {
+      title: "Местоположение",
+      dataIndex: "",
+      key: "",
+      width: "19%",
+      render: (record: any) => (
+        <div>
+          {record?.location?.name}
+        </div>
+      )
+    },
+    {
+      title: "Артикул",
+      dataIndex: "sku",
+      key: "sku",
+      width: "19%",
     },
     {
       title: "",
@@ -135,29 +160,32 @@ const HomeContent = () => {
   return (
     <MaxWithLayout>
       <div className={styles.homeСontent}>
+
         <div className={styles.top}>
           <Button onClick={() => setIsOpenModalAdd(true)}>
             Добавить
           </Button>
         </div>
+
         <div className={styles.table}>
 
           <Table
-            // loading={isLoading}
+            loading={isLoading || isLoadingDelete}
             className={"product-arrival-table"}
             columns={columns}
-            dataSource={data}
+            dataSource={inventoryBookData?.result || []}
             scroll={{ x: true }}
             pagination={{
-              // onChange: (page, pageSize): any => setCurrentPage(page),
+              onChange: (page, pageSize): any => setCurrentPage(page),
               position: ["bottomCenter"],
-              // pageSize: Number(currentPageSize),
-              // total: Number(costPriceData?.total),
+              pageSize: 10,
+              total: Number(inventoryBookData?.total),
               showSizeChanger: false,
-              // current: currentPage,
+              current: currentPage,
             }}
           />
         </div>
+
       </div>
 
       <Modal
@@ -172,12 +200,13 @@ const HomeContent = () => {
       </Modal>
 
       <Modal
-        open={isOpenModalEdit}
+        open={isOpenModalEdit.isOpen}
         closable={false}
         footer={null}
         width={600}
       >
         <EditModal
+          id={isOpenModalEdit?.id}
           onClose={() => setIsOpenModalEdit(false)}
         />
       </Modal>

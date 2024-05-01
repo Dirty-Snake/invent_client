@@ -1,7 +1,7 @@
 import { apiToken } from "../../../api/ApiWithToken";
 
-export async function getLocationData(currentPage: number){
-  const response = await apiToken.get<any>(`/items-locations?page=${currentPage}&limit=10`);
+export async function getLocationData(currentPage: number, limit: number){
+  const response = await apiToken.get<any>(`/items-locations?page=${currentPage}&limit=${limit}`);
   if (response?.status !== 200) {
     throw new Error(response.data.message);
   }

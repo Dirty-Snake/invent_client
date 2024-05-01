@@ -1,10 +1,51 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import styles from './style.module.scss';
-import { Typography } from "antd";
+import { theme, Typography } from "antd";
+import BurderIcon from "../../assets/Icons/BurderIcon";
+import { useUnit } from "effector-react";
+import { $user, logout } from "../../entities/user/model/index";
+import { Link } from "react-router-dom";
+import logo from "../../assets/images/logo.jpg";
 
 const { Title } = Typography;
+const { useToken } = theme;
 
-const Header: FC<{title: string}> = ({title}) => {
+const Header: FC<{ title: string }> = ({ title }) => {
+
+  const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
+
+  const [user] = useUnit([$user])
+  const isUserExist = user?.accessToken
+  const { token } = useToken();
+
+  const ref = useRef<any>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (ref.current && !ref?.current?.contains(event.target)) {
+        setIsOpenMenu(false)
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [ref]);
+
+  const mainNav = [
+    {
+      title: 'Статистика ДТП',
+      link: '/home',
+    },
+    {
+      title: 'Местонахождения',
+      link: '/location',
+    },
+    {
+      title: 'Брэнды',
+      link: '/brends',
+    },
+  ]
 
   return (
     <div className={styles['header']}>
@@ -22,7 +63,63 @@ const Header: FC<{title: string}> = ({title}) => {
         >
           {title || 'Авторизация'}
         </Title>
+        {
+          isUserExist &&
+          <div
+              className={styles['headerBurger']}
+              onClick={() => setIsOpenMenu(true)}
+          >
+              <BurderIcon />
+          </div>
+        }
       </div>
+
+      <div
+        ref={ref}
+        className={styles['headerNav']}
+        style={{
+          visibility: isOpenMenu ? "visible" : 'hidden',
+          opacity: isOpenMenu ? 1 : 0,
+          transform: isOpenMenu ? 'translateX(0)' : 'translateX(200px)'
+        }}
+      >
+        <div className={styles.barWrap}>
+
+          <div className={styles.barIcon}>
+            <img src={logo} alt="" />
+          </div>
+
+          <div className={styles.mainNav}>
+            {
+              mainNav?.map((item: any) =>
+                <Link to={item.link}>
+                  <Title
+                    level={5}
+                    style={{
+                      color: location.pathname?.includes(item.link)
+                        ? token.colorPrimary
+                        : token.colorText,
+                      fontWeight: 400
+                    }}
+                  >
+                    {item?.title}
+                  </Title>
+                </Link>
+              )
+            }
+          </div>
+
+          <div className={styles.mainNav} onClick={() => logout()}>
+            <button>
+              Выйти
+            </button>
+          </div>
+
+        </div>
+
+
+      </div>
+
     </div>
   );
 };

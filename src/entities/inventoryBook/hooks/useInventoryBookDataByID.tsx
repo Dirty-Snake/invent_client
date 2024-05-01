@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import { getLocationById } from "../api/index";
+import { geInventoryBookById } from "../api/index";
 
-export default function useLocationDataByID(id: string): {
+export default function useInventoryBookDataByID(id: string): {
   locationDataById: any | undefined;
   isLoading: boolean;
 }{
 
   const { data: locationDataById, isLoading } = useQuery({
-    queryKey: ['LOCATION_DATA_BY_ID', id],
-    queryFn: async(id: string) => await getLocationById(id),
+    queryKey: ['INVENTORY_BOOK_DATA_BY_ID', id],
+    queryFn: async(id: string) => await geInventoryBookById(id),
     retryOnMount: false
   });
 

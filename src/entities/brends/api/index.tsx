@@ -1,7 +1,7 @@
 import { apiToken } from "../../../api/ApiWithToken";
 
-export async function getBrandsData(currentPage: number){
-  const response = await apiToken.get<any>(`/items-brands?page=${currentPage}&limit=10`);
+export async function getBrandsData(currentPage: number, limit: number){
+  const response = await apiToken.get<any>(`/items-brands?page=${currentPage}&limit=${limit}`);
   if (response?.status !== 200) {
     throw new Error(response.data.message);
   }

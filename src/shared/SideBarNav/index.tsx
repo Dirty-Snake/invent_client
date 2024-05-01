@@ -14,9 +14,6 @@ const SideBarNav = () => {
 
   const location = useLocation()
   const { token } = useToken();
-  const navigate = useNavigate()
-
-  const [user] = useUnit([$user])
 
   const mainNav = [
     {

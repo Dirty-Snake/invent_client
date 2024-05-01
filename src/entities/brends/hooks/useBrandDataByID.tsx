@@ -9,6 +9,7 @@ export default function useBrandDataByID(id: string): {
   const { data: brandDataById, isLoading } = useQuery({
     queryKey: ['BRAND_DATA_BY_ID', id],
     queryFn: async(id: string) => await getBrandById(id),
+    retryOnMount: false
   });
 
   return {

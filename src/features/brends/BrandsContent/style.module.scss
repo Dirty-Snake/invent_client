@@ -1,13 +1,21 @@
 .homeСontent {
-
-}
-
-.top{
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
+    gap: 10px;
+
+
+    @media(max-width: 1024px) {
+        margin-top: 70px;
+    }
 }
 
-.table{
-    margin-top: 20px;
+.top {
+    display: flex;
+    justify-content: flex-end;
+
+
+    @media(max-width: 1024px) {
+        justify-content: center;
+    }
 }

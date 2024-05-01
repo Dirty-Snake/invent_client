@@ -22,7 +22,7 @@ const api = axios.create({
   },
 });
 
-apiToken.interceptors.request.use(
+api.interceptors.request.use(
   async (config) => {
     return config;
   },
