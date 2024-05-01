@@ -68,6 +68,7 @@ export default function EditModal({
   useEffect(() => {
     form?.setFieldsValue({
       name: locationDataById?.name,
+      description: locationDataById?.description,
       sku: locationDataById?.sku,
       model: locationDataById?.info?.model,
       factory_number: locationDataById?.info?.factory_number,
@@ -109,6 +110,13 @@ export default function EditModal({
           rules={[{ required: true }]}
           name={"name"}
           label={"Название"}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          rules={[{ required: true }]}
+          name={"description"}
+          label={"Описание"}
         >
           <Input />
         </Form.Item>

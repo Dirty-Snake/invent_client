@@ -128,6 +128,12 @@ const HomeContent = () => {
       width: "19%",
     },
     {
+      title: "Описание",
+      dataIndex: "description",
+      key: "description",
+      width: "19%",
+    },
+    {
       title: "Списание предмета",
       dataIndex: "decommissioned",
       key: "decommissioned",

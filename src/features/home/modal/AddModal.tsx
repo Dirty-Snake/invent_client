@@ -77,6 +77,13 @@ export default function AddModal({
         >
           <Input />
         </Form.Item>
+        <Form.Item
+          rules={[{ required: true }]}
+          name={"description"}
+          label={"Описание"}
+        >
+          <Input />
+        </Form.Item>
 
         <Form.Item
           rules={[{ required: true, message: 'Пожалуйста, введите артикул (8 символов)', pattern: /^.{8}$/ }]}

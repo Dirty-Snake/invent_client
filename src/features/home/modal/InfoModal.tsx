@@ -48,6 +48,9 @@ export default function InfoModal({
           Название: {locationDataById?.name}
         </p>
         <p>
+          Описание: {locationDataById?.description}
+        </p>
+        <p>
           Артикул: {locationDataById?.sku}
         </p>
         <p>
