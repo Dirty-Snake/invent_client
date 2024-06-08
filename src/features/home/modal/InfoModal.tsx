@@ -51,7 +51,7 @@ export default function InfoModal({
           Описание: {locationDataById?.description}
         </p>
         <p>
-          Артикул: {locationDataById?.sku}
+          Инвентарный номер (8 символов): {locationDataById?.sku}
         </p>
         <p>
           Модель: {locationDataById?.info?.model}
@@ -63,6 +63,9 @@ export default function InfoModal({
           Срок полезного использования (в месяцах): {locationDataById?.info?.period_use}
         </p>
         <p>
+          Амортизация: {locationDataById?.info?.depreciation}
+        </p>
+        <p>
           Стоимость: {Number(locationDataById?.info?.cost)}
         </p>
         <p>
@@ -72,13 +75,13 @@ export default function InfoModal({
           Списание предмета: {locationDataById?.decommissioned ? 'Да' : 'Нет'}
         </p>
         <p>
-          Местоположение: {locationDataById?.location?.id}
+          Местоположение: {locationDataById?.location?.name}
         </p>
         <p>
-          Производитель: {locationDataById?.info?.brand?.id}
+          Производитель: {locationDataById?.info?.brand?.name}
         </p>
         <p>
-          Пользователь: {locationDataById?.responsible?.id}
+          Ответственный: {locationDataById?.responsible?.username}
         </p>
         <div>
           История ответственных:
